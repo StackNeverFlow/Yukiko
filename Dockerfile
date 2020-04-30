@@ -1,9 +1,11 @@
-FROM node:12
-RUN mkdir -p /usr/src/yukiko
+FROM alpine:latest
 WORKDIR /usr/src/yukiko
-COPY package.json /usr/src/yukiko
-COPY botconfig.json /usr/src/yukiko
-RUN npm install
-RUN npm i -g nodemon
-COPY . /usr/src/yukiko
+COPY package.json botconfig.json ./
+RUN apk add --update \
+    && apk add --no-cache nodejs-current nodejs-npm \
+    && apk add --no-cache --virtual .build git curl build-base g++ \
+    && npm install \
+    && npm i -g nodemon \
+    && apk del .build
+COPY . .
 CMD npm run dev
