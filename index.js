@@ -1,4 +1,5 @@
 var { Client, RichEmbed, Collection, Attachment, Utils, MessageCollector } = require('discord.js');
+var { RedisClient } = require('discord.js-redis');
 var botConfig = require('./botconfig.json');
 var fs = require("fs");
 var Canvas = require('canvas');
@@ -7,6 +8,7 @@ var mongoose = require("mongoose");
 var bot = new Client({
     disableEveryone: true
 });
+redis = new RedisClient(bot, {});
 
 var active = new Map();
 
@@ -37,7 +39,7 @@ bot.categories = fs.readdirSync("./commands/");
 
 bot.on('disconnect', () => console.log("\x1b[32m${bot.user.username}\x1b[0m is Disconected... Waiting for reconnect"));
 bot.on('reconnecting', () => console.log("\x1b[32m${bot.user.username}\x1b[0m  is reconnecting."))
-
+redis.on('ready', () => console.log('Redis ready!'));
 bot.on("ready", () => {
     console.log(`\x1b[32m${bot.user.username}\x1b[0m is now started and running in \x1b[31m${process.env.NODE_ENV} \x1b[0menvironement!`);
     bot.user.setPresence({
@@ -106,7 +108,6 @@ bot.on('message', async message => {
     //DA NEW XP SYSTEM 2.0
     let xpAdd = Math.floor(Math.random() * 7) + 8;
     let messageAdd = +1
-
 
     Users.findOne({
         did: message.author.id,
