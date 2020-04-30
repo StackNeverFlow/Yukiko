@@ -51,7 +51,7 @@ module.exports = {
                 .setFooter(bot.user.username, bot.user.displayAvatarURL)
                 .setTimestamp()
             let incidentChannel = message.guild.channels.find('name', "incident");
-            if (!incidentChannel) return message.channel.send("Oops Erreur 10-Kick :/ <@186195458182479874> ");
+            if (!incidentChannel) return message.channel.send("Oops Erreur 10-Cnf :/ <@186195458182479874> ");
             incidentChannel.send(iEmbed)
 
             await (tomute.addRole(muterole.id));

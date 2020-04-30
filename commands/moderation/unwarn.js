@@ -22,11 +22,11 @@ module.exports = {
         if(wUser.hasPermission("BAN_MEMBERS")) return message.reply(`You can't warn ${wUser} he/she is waaaaay too cool for that!`)
         if(!args[1]) return message.reply("Please provide a reason.")
         Users.findOne({
-            userID: wUser.id,
+            did: wUser.id,
             serverID: message.guild.id
         }, async (err, users) => {
             if(err) console.log(err);
-            users.warn = users.warn -1
+            users.warns = users.warns -1
             users.save()
             
 
@@ -38,7 +38,7 @@ module.exports = {
             .setFooter(bot.user.username, bot.user.displayAvatarURL)
             .setDescription(`=> **Warn deleted from user: ** ${wUser} (${wUser.id})
             => **Deleted by:** ${message.author} (${message.author.id})
-            => **warn Number:** ${users.warn}
+            => **warn Number:** ${users.warns}
             => **Reason:** ${args.slice(1).join(" ")}`)
             logChannel.send(embed)
             message.channel.send(`${wUser}'warn has been deleted.`)
