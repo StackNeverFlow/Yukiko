@@ -1,6 +1,6 @@
 FROM alpine:latest
 WORKDIR /usr/src/yukiko
-COPY package.json botconfig.json ./
+COPY package.json botconfig.exemple.json ./botconfig.json
 RUN apk add --update \
     && apk add --no-cache nodejs-current nodejs-npm \
     && apk add --no-cache --virtual .build git curl build-base g++ \
